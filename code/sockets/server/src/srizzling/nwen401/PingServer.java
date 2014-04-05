@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,107 +15,84 @@ import java.net.Socket;
  * @author Sriram Venkatesh (venksriram@gmail.com)
  *
  */
-public class PingServer {
+public class PingServer extends Thread {
 
-	private ServerSocket echoServer;
-	private Socket clientSocket;
-	private int numConnections = 0;
-	private int port;
+	protected Socket clientSocket;
 
+	public static void main(String[] args) throws IOException 
+	{ 
+		ServerSocket serverSocket = null; 
 
-	public PingServer(int port){
-		this.port = port;
-	}
-
-	public void stopServer(){
-		System.out.println("Closing Connections: Server is shutting down");
-		System.exit(0);
-	}
-
-	public void startServer(){
-		//Open a server socket on a given port
-
-		try{
-			echoServer = new ServerSocket(port);
-		}
-		catch (IOException e){
-			System.out.println("Opps! An error occured trying to create a socket" + e);
-		}
-
-		System.out.println("The server has started successfully and is waiting for incoming connections");
-
-		while(true){
-			try{
-				clientSocket = echoServer.accept();
-				numConnections ++;
-				Worker serverWorker = new Worker(clientSocket, numConnections, this);
-			}
-			catch (IOException e){
-				System.out.println("Opps! An error occured during the processing of client requests" + e);
-			}
-		}
-	}
-
-
-	public static void main(String args[]){
-		int port = 5679; // Port of Server need to open it for connections
-		PingServer server = new PingServer(port);
-		server.startServer();
-	}
-
-
-}
-
-class Worker implements Runnable {
-
-	private BufferedReader is;
-	private PrintStream os;
-	private Socket clientSocket;
-	private int id;
-	private PingServer server;
-
-	public Worker(Socket clientSocket, int id, PingServer server){
-		this.clientSocket = clientSocket;
-		this.id = id;
-		this.server = server;
-		System.out.println( "Connection " + id + " established with: " + clientSocket );
-		try {
-			is = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			os = new PrintStream(clientSocket.getOutputStream());
-		} catch (IOException e) {
-			System.out.println(e);
-		}
-	}
-
-
-	@Override
-	public void run() {
-		String line;
-		try {
-			boolean serverStop = false;
-
-			while (true) {
-				line = is.readLine();
-				System.out.println( "Received " + line + " from Connection " + id + "." );
-				int n = Integer.parseInt(line);
-				if ( n == -1 ) {
-					serverStop = true;
-					break;
+		try { 
+			serverSocket = new ServerSocket(10008); 
+			System.out.println ("Connection Socket Created");
+			try { 
+				while (true)
+				{
+					System.out.println ("Waiting for Connection");
+					new PingServer (serverSocket.accept()); 
 				}
-				if ( n == 0 ) break;
-				os.println("" + n*n ); 
+			} 
+			catch (IOException e) 
+			{ 
+				System.err.println("Accept failed."); 
+				System.exit(1); 
+			} 
+		} 
+		catch (IOException e) 
+		{ 
+			System.err.println("Could not listen on port: 10008."); 
+			System.exit(1); 
+		} 
+		finally
+		{
+			try {
+				serverSocket.close(); 
 			}
-
-			System.out.println( "Connection " + id + " closed." );
-			is.close();
-			os.close();
-			clientSocket.close();
-
-			if ( serverStop ) server.stopServer();
-		} catch (IOException e) {
-			System.out.println(e);
+			catch (IOException e)
+			{ 
+				System.err.println("Could not close port: 10008."); 
+				System.exit(1); 
+			} 
 		}
-
 	}
 
+	private PingServer (Socket clientSoc)
+	{
+		clientSocket = clientSoc;
+		start();
+	}
+
+	public void run()
+	{
+		System.out.println ("New Communication Thread Started");
+
+		try { 
+			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), 
+					true); 
+			BufferedReader in = new BufferedReader( 
+					new InputStreamReader( clientSocket.getInputStream())); 
+
+			String inputLine; 
+
+			while ((inputLine = in.readLine()) != null) 
+			{ 
+				int input = Integer.parseInt(inputLine);
+				System.out.println ("Server: " + input*input); 
+				out.println(input*input); 
+
+				if (input ==-1) break; 
+			} 
+
+			out.close(); 
+			in.close(); 
+			clientSocket.close(); 
+		} 
+		catch (IOException e) 
+		{ 
+			System.err.println("Problem with Communication Server");
+			System.exit(1); 
+		} 
+
+	}
 }
