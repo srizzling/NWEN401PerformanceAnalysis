@@ -20,8 +20,9 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass{article}
-
+\newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\# #1}\\}
 \usepackage{graphicx} % Required for the inclusion of images
+\graphicspath{ {images/} }
 \usepackage{natbib} % Required to change bibliography style to APA
 \usepackage{amsmath} % Required for some math elements 
 
@@ -56,7 +57,7 @@
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-The goal of the project was to evaluate the performance of the following the performance of three inter-process communication mechanisms:
+The goal of the project was to evaluate the performance of the following three inter-process communication mechanisms:
 
 % If you have more than one objective, uncomment the below:
 \begin{enumerate}
@@ -81,7 +82,8 @@ Each IPC was tested under the following conditions:
 	\item Each client will send 50 requests to the server.
 	\item The client and server were run the same local network, and the client and server were run
 	on different network.
-	\item Tests were all run using a Linux Machine. 
+	\item Tests were all run using a Unix Machine running similar specs. 
+	\item For testing under different networks, a SSH Tunnel was created between the remote and local machine.
 \end{itemize}
 
 \subsection{Performance Criteria}
@@ -100,6 +102,11 @@ The response time in this distributed configuration is appoximately
 
 \section{Apparatus}
 
+\subsection{Software Used}
+
+\begin{itemize}
+\item {\bf Wireshark} was used to derive statistics related to calculate the Round Trip time between the client and server for all the the different IPC paradigms
+\end{itemize}
 
 
 %----------------------------------------------------------------------------------------
@@ -107,6 +114,29 @@ The response time in this distributed configuration is appoximately
 %----------------------------------------------------------------------------------------
 
 \section{Procedures}
+
+\subsection{Using Wireshark}
+Wireshark was used to derive statistics related to calculate the Round Trip time between the client and server for all the the different IPC paradigms \\
+
+Instructions to use Wireshark Network Protocol Analyzer (Assumes wireshark is already installed):
+\begin{enumerate}
+	\item Execute the following command: \\
+	\shellcmd{sudo wireshark}
+	You will need to have super user rights to in order to use wireshark properly.
+	
+	\includegraphics[width=\textwidth]{wireshark-1-screenshot}
+
+	\item Start capturing the traffic on the specfic interface on which you would be running your client application. In this case, it is the wlan0 interface.
+
+	\item After starting capturing on specfic interface, apply filter on it by entering filter expression in filter field at top left corner (as shown below) to capture only traffic between your client and server application.
+		\begin{itemize}
+        	\item The filter expression for when the client and server are on different networks:
+     		\shellcmd{ip.addr==<client-external-ip-address and ip.addr==<host-external-ip-address>}
+        	\item The filter expression for when the client and server are on different networks:
+     		\shellcmd{ip.addr==<client-internal-ip-address and ip.addr==<host-internal-ip-address>}
+    	\end{itemize}
+
+\end{enumerate}
 
 
 %----------------------------------------------------------------------------------------

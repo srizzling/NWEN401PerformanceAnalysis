@@ -11,20 +11,26 @@ import java.net.UnknownHostException;
 public class PingClient {
 
 	public static void main(String[] args) throws IOException {
-
-		String serverHostname = new String ("127.0.0.1");
-
-		if (args.length > 0)
+		String serverHostname = "";
+		int port = 0;
+		if (args.length > 0){
 			serverHostname = args[0];
+			port = Integer.parseInt(args[1]);
+		}
+		else{
+			System.out.println ("No hostname or port specifed...exiting");
+			System.exit(0);
+		}
+		
 		System.out.println ("Attemping to connect to host " +
-				serverHostname + " on port 10008.");
+				serverHostname + " on port " + port);
 
 		Socket echoSocket = null;
 		PrintWriter out = null;
 		BufferedReader in = null;
 
 		try {
-			echoSocket = new Socket(serverHostname, 10008);
+			echoSocket = new Socket(serverHostname, port);
 			out = new PrintWriter(echoSocket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
 					echoSocket.getInputStream()));
@@ -38,10 +44,12 @@ public class PingClient {
 		}
 
 		int i = 0;
-		while (i < 10) {
-			System.out.println("You are sending:" + i);
+		while (i < 50) {
+			System.out.println("You are sending: " + i);
 			out.println(i);
 			System.out.println("Server Response: " + in.readLine());
+			System.out.println("=========");
+			
 			i++;
 		}
 
