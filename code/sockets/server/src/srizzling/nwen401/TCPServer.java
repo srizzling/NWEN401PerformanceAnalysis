@@ -13,7 +13,7 @@ import java.net.Socket;
 public class TCPServer {
   public static void main(String[] args){
     try{
-      ServerSocket server = new ServerSocket(8888);
+      ServerSocket server = new ServerSocket(6000);
  
       while(true){
         System.out.println("Server starts listening...");

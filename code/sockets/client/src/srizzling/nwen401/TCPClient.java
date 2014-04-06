@@ -21,7 +21,7 @@ public class TCPClient {
         //Repeat the same size for 5 times
         for(int loop=0;loop<5;loop++){
           //Connect to server
-          Socket socket = new Socket(hostname, 8888);
+          Socket socket = new Socket(hostname, 6000);
  
           PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
  
