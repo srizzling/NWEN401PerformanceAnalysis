@@ -13,6 +13,7 @@ public class TCPClient {
     try{
       int transmittedTime = 100000;
       int n = 5;
+      String hostname = args[0];
       //Vary the message size
       for(int num=0;num<5;num++){
         n = n + 5;
@@ -20,7 +21,7 @@ public class TCPClient {
         //Repeat the same size for 5 times
         for(int loop=0;loop<5;loop++){
           //Connect to server
-          Socket socket = new Socket("192.168.40.190", 8888);
+          Socket socket = new Socket(hostname, 8888);
  
           PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
  
