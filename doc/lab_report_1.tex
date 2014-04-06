@@ -66,14 +66,26 @@ The goal of the project was to evaluate the performance of the following three i
 	\item Java Message Service using JBoss Package
 \end{enumerate}
 
-For the experiment, I have created a simple Ping application where the client sends an request to the server and the server sends back a response acknowledging the request. \\
+\subsection{Description}
+
+
+\subsection{Aim}
+Although these mechanisms are principally different protocols, there are always certain situations where remote applications can be implemented using either of these protocols. In such situations, programmers need to choose one of them based on some reliable and concrete results of performance comparision of these two protocols. \\
+
 
 \subsection{Problems to be Solved}
 After the completion of the experiment, the following questions will be answered:
 \begin{itemize}
 	\item What is the relative performance of each IPC method?
 	\item How does the features of each method explain the difference in performance?	
-	\item Does the location (Local Network/Different Network) of the client/server pair affect the performance of the IPC?
+	\item How does the size of the message being sent affect the performance of the protocol?
+\end{itemize}
+
+\subsection{Performance Comparison}
+In this project report, I have conducted the perofmrance comparison of Java Socket Via TCP, Java RMI and JMS based on three main factors:
+\begin{itemize}
+\item Latency
+\item Throughput
 \end{itemize}
 
 \subsection{Experiment Scenarios}
@@ -87,11 +99,11 @@ Each IPC was tested under the following conditions:
 \end{itemize}
 
 \subsection{Performance Criteria}
-For the purposes of this project we have measured the round trip times (RTT) and throughput of each application. The RTT is the total time a method invocation takes. It is important to not that the methods used for perfomrance evaluation do not do any processing and therefore the RTT expresses the overheard of the method invocation. \\
+For the purposes of this project we have measured the round trip times (RTT) and throughput of each application. The RTT is the total time a method invocation takes. It is important to not that the methods used for perfomrance evaluation do not do any processing and therefore the RTT expresses the overheard of the method invocation. Throughput was calculated by dividing total received packet size by duration \\
 
-In the each of the test cases, the network is fast and has a high bandwidth. The Client and Server systems under test are running tightly controlled (50) repeated loops of remote method requests. \\
+In the each of the test cases, the network is fast and has a high bandwidth.
 
-The response time in this distributed configuration is appoximately
+
 
 
 
@@ -104,10 +116,31 @@ The response time in this distributed configuration is appoximately
 
 \subsection{Software Used}
 
-\begin{itemize}
-\item {\bf Wireshark} was used to derive statistics related to calculate the Round Trip time between the client and server for all the the different IPC paradigms
-\end{itemize}
+\subsection{Experimental Environment}
+\begin{table}
+    \begin{tabular}{|c|c|}
+    \hline
+    Parameter        & Value                                    \\ \hline
+    Operating System & elementary OS Luna     					\\ \hline
+    Java Version     & OpenJDK v1.7.0\_51                       \\ \hline
+    CPU              & Intel(R) Core(TM) i7-2620M CPU @ 2.70GHz \\ \hline
+    RAM              & 8GB                                      \\ \hline
+    \end{tabular}
+    \caption {Client Computer Specifications}
+\end{table}
 
+
+\begin{table}
+    \begin{tabular}{|c|c|}
+    \hline
+    Parameter        & Value                                    \\ \hline
+    Operating System & Ubuntu 12.04.3 LTS    					\\ \hline
+    Java Version     & OpenJDK v1.7.0\_51                       \\ \hline
+    CPU              & Intel(R) Pentium(R) 4 CPU 2.80GHz 		\\ \hline
+    RAM              & 1GB                                      \\ \hline
+    \end{tabular}
+    \caption {Server Computer Specifications}
+\end{table}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 3
@@ -115,28 +148,21 @@ The response time in this distributed configuration is appoximately
 
 \section{Procedures}
 
-\subsection{Using Wireshark}
-Wireshark was used to derive statistics related to calculate the Round Trip time between the client and server for all the the different IPC paradigms \\
+\subsection{Methodology}
+Developed a simple client server application in Java. The Client sends 100000 messages with the varying sizes. 
 
-Instructions to use Wireshark Network Protocol Analyzer (Assumes wireshark is already installed):
-\begin{enumerate}
-	\item Execute the following command: \\
-	\shellcmd{sudo wireshark}
-	You will need to have super user rights to in order to use wireshark properly.
-	
-	\includegraphics[width=\textwidth]{wireshark-1-screenshot}
+The sizes of the message are displayed below: 
+\begin{itemize}
+	\item 10 kilobytes
+	\item 15 kilobytes
+	\item 20 kilobytes
+	\item 25 kilobytes
+	\item 30 kilobytes
+	\item 35 kilobytes
+\end{itemize}
 
-	\item Start capturing the traffic on the specfic interface on which you would be running your client application. In this case, it is the wlan0 interface.
+To make sure my tests were reliable we ran each test 5 times and gathered statitcs based on the results.
 
-	\item After starting capturing on specfic interface, apply filter on it by entering filter expression in filter field at top left corner (as shown below) to capture only traffic between your client and server application.
-		\begin{itemize}
-        	\item The filter expression for when the client and server are on different networks:
-     		\shellcmd{ip.addr==<client-external-ip-address and ip.addr==<host-external-ip-address>}
-        	\item The filter expression for when the client and server are on different networks:
-     		\shellcmd{ip.addr==<client-internal-ip-address and ip.addr==<host-internal-ip-address>}
-    	\end{itemize}
-
-\end{enumerate}
 
 
 %----------------------------------------------------------------------------------------
@@ -164,17 +190,20 @@ Instructions to use Wireshark Network Protocol Analyzer (Assumes wireshark is al
 
 Performance has an important influence on the usability of distributed applications. Therefore it is useful to know, how well do these distributed models perform. In this project we have clarifed this question. We have compared the relative performance of RMI, JMS and Java Sockets for the Java 7 verion. We have measured the performance on a Linux Computer.
 
-What is the relative performance of each IPC method?
+What is the relative performance of each IPC method?\\
 
 
-How does the features of each method explain the difference in performance?
+How does the features of each method explain the difference in performance? \\
 
 
-Does the location (Local Network/Different Network) of the client/server pair affect the performance of the IPC?
+Does the location (Local Network/Different Network) of the client/server pair affect the performance of the IPC? \\
 
 
 
-Future projects should compare the relative performance of using these methods of IPC on different operating systems and validate a wheather the operating system affects the performance of these distributed methods.
+\subsection{Future Extensions}
+Future projects should compare the relative performance of using these methods of IPC on different operating systems and validate a wheather the operating system affects the performance of these distributed methods. 
+
+Another comparision should be made between different transport protocols such as UDP and TCP to see which performs better in different circumstances.
 
 
 %----------------------------------------------------------------------------------------
