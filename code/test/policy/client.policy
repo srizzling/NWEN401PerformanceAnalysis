@@ -1,0 +1,3 @@
+grant codeBase "file:/home/ournas/projects/NWEN401PerformanceAnalysis/code/test" {
+    permission java.security.AllPermission;
+};

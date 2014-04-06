@@ -1,0 +1,3 @@
+grant codeBase "file:/home/sriram/projects/NWEN401P1/code/test" {
+    permission java.security.AllPermission;
+};
