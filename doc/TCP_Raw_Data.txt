@@ -1,0 +1,150 @@
+remote ip: 192.168.1.65
+
+Test:10 0 || Duration 34088371097
+Test:10 2 || Duration 40490049620
+Test:10 1 || Duration 39624206108
+Test:10 4 || Duration 18593221066
+Test:10 3 || Duration 39021863868
+
+Test:15 0 || Duration 27851439175
+Test:15 1 || Duration 27851045578
+Test:15 2 || Duration 30614702047
+Test:15 3 || Duration 27416788890
+Test:15 4 || Duration 29055777314
+
+Test:20 0 || Duration 39111770048
+Test:20 1 || Duration 43545541645
+Test:20 2 || Duration 39763573234
+Test:20 3 || Duration 41285883675
+Test:20 4 || Duration 42229306769
+
+Test:30 0 || Duration 57986551407
+Test:30 1 || Duration 58917200219
+Test:30 2 || Duration 57477609699
+Test:30 3 || Duration 59043904170
+Test:30 4 || Duration 56741827852
+
+Test:25 0 || Duration 49922625447
+Test:25 1 || Duration 53077299440
+Test:25 2 || Duration 50207140854
+Test:25 3 || Duration 48928548212
+Test:25 4 || Duration 49047533485
+
+
+
+Test:15 0 || Duration 193554273
+Test:15 1 || Duration 171700606
+Test:15 2 || Duration 155769571
+Test:15 3 || Duration 140515712
+Test:15 4 || Duration 143302676
+
+Test:20 0 || Duration 151543078
+Test:20 1 || Duration 132297586
+Test:20 4 || Duration 133786201
+Test:20 3 || Duration 192018699
+Test:20 2 || Duration 199097988
+
+Test:25 3 || Duration 160000019
+Test:25 4 || Duration 152076707
+Test:25 1 || Duration 217964767
+Test:25 2 || Duration 151610597
+Test:25 0 || Duration 208378962
+
+Test:10 0 || Duration 398051637
+Test:10 2 || Duration 299453980
+Test:10 1 || Duration 296830737
+Test:10 4 || Duration 371494311
+Test:10 3 || Duration 445968516
+
+Test:30 4 || Duration 130032527
+Test:30 3 || Duration 231816674
+Test:30 1 || Duration 161650906
+Test:30 2 || Duration 200889140
+Test:30 0 || Duration 161432149
+
+
+Test:15 0 || Duration 17070453569
+Test:15 1 || Duration 17067783313
+Test:15 2 || Duration 16129036921
+Test:15 3 || Duration 17839608170
+Test:15 4 || Duration 18942115505
+
+
+Test:30 4 || Duration 34654832750
+Test:30 3 || Duration 33147880572
+Test:30 1 || Duration 35097960542
+Test:30 2 || Duration 32620501621
+Test:30 0 || Duration 35083992234
+
+
+Test:25 3 || Duration 31683497662
+Test:25 4 || Duration 31665280208
+Test:25 1 || Duration 30288785998
+Test:25 2 || Duration 31510142038
+Test:25 0 || Duration 31596205879
+
+Test:10 0 || Duration 19078182858
+Test:10 2 || Duration 19143876478
+Test:10 1 || Duration 19100410776
+Test:10 4 || Duration 10071098015
+Test:10 3 || Duration 16691980453
+
+
+Test:20 4 || Duration 21243862556
+Test:20 3 || Duration 24466954165
+Test:20 2 || Duration 22560137501
+Test:20 0 || Duration 21834393694
+Test:20 1 || Duration 21174529794
+
+Test:15 0 || Duration 530936339
+Test:15 1 || Duration 529932775
+Test:15 2 || Duration 521518957
+Test:15 3 || Duration 534102628
+Test:15 4 || Duration 300664082
+
+
+Test:20 0 || Duration 388570911
+Test:20 1 || Duration 390341963
+Test:20 4 || Duration 296110733
+Test:20 3 || Duration 405582249
+Test:20 2 || Duration 322180375
+
+Test:20 0 || Duration 891455492
+Test:20 1 || Duration 761288765
+Test:20 4 || Duration 613171959
+Test:20 3 || Duration 709128425
+Test:20 2 || Duration 655889664
+
+Test:15 0 || Duration 887613078
+Test:15 1 || Duration 818983265
+Test:15 2 || Duration 680296742
+Test:15 3 || Duration 619143270
+Test:15 4 || Duration 653793605
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

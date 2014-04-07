@@ -4,7 +4,7 @@ import java.rmi.registry.Registry;
  
 /**
  *
- * @author http://lycog.com
+ * @author Sriram Venkatesh
  */
 public class MessageServer {
   public static void main(String[] args){

@@ -32,7 +32,7 @@
 \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
 
-%\usepackage{times} % Uncomment to use the Times New Roman font
+\usepackage{times} % Uncomment to use the Times New Roman font
 
 %----------------------------------------------------------------------------------------
 %	DOCUMENT INFORMATION
@@ -64,8 +64,7 @@ The goal of the project was to evaluate the performance of the following three i
 
 \subsection{Description}
 \textbf{Java Sockets via TCP} \\ 
-#TODO
-
+\todo{Need to write a short description of TCP connection}
 
 
 
@@ -85,6 +84,9 @@ To order to communicate, Java RMI requires to do the following steps:
 \item The client stub reads the network messages from the local kernal
 \item After converting the return value to its local format, the client stub finally returns to the client function.
 \end{enumerate}
+
+\textbf{Java JMS via JBoss}
+\todo{Need to write a short description of Java JMS}
 
 
 \subsection{Aim}
@@ -152,7 +154,7 @@ RAM              & 8GB                                      \\ \hline
 \begin{table}[h]
 \begin{tabular}{|c|c|}
 \hline
-Parameter        & Value                                    \\ \hline
+\textbf{Parameter}        & \textbf{Value}                                    \\ \hline
 Operating System & Ubuntu 12.04.3 LTS    					\\ \hline
 Java Version     & OpenJDK v1.7.0\_51                       \\ \hline
 CPU              & Intel(R) Pentium(R) 4 CPU 2.80GHz 		\\ \hline
@@ -168,7 +170,8 @@ RAM              & 1GB                                      \\ \hline
 \section{Procedures}
 
 \subsection{Methodology}
-Developed a simple client server application in Java. The Client sends 10000 messages with the varying sizes. 
+\subsection{Scenario One}
+Developed a simple client server application in Java. The Client sends 1000 messages with the varying sizes. \\
 
 The sizes of the message are displayed below: 
 \begin{itemize}
@@ -179,10 +182,14 @@ The sizes of the message are displayed below:
 \item 30 kilobytes
 \end{itemize}
 
-After creating a program with varying sizes. Another application was made to send objects around the network, to test the performance 
-comparison between the different IPC protocols. 
+To make sure my tests were reliable I ran each test 5 times and gathered statistics based on the results.
 
-To make sure my tests were reliable we ran each test 5 times and gathered statistics based on the results.
+
+\subsection{Scenario Two}
+After creating a program with varying sizes. Another application was made to send objects around the network, to test the performance 
+comparison between the different IPC protocols. In this test, the client sent 1000 objects to the server application and the Round Trip Time was calculated. \\
+
+	To make sure my tests were reliable I ran each test 5 times and gathered statistics based on the results.
 
 
 
@@ -193,7 +200,30 @@ To make sure my tests were reliable we ran each test 5 times and gathered statis
 \section{Performance Results}
 
 
+\begin{table}[!t]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+ & \textbf{TCP} & \textbf{Java RMI} & \textbf{JMS}\\ 
+\hline
+ \textbf{10KB} & 16 & 36 & 30\\ 
+\hline
+ \textbf{15KB} & 17 & 55 & 40\\ 
+\hline
+ \textbf{20KB} & 22 & 72 & 45\\ 
+\hline
+ \textbf{25KB} & 31 & 87 & 50\\ 
+\hline
+ \textbf{30KB} & 34 & 93 & 55\\ 
+\hline
+\hline\end{tabular}
+\label{table:table}
+\caption{Processed Latency(s) of the Different IPC}
+\end{table}
 
+
+
+\subsection{Scenario One}
 
 %----------------------------------------------------------------------------------------
 %	SECTION 5
@@ -208,7 +238,7 @@ To make sure my tests were reliable we ran each test 5 times and gathered statis
 
 \section{Conclusions and recommendations}
 
-Performance has an important influence on the usability of distributed applications. Therefore it is useful to know, how well do these distributed models perform. In this project we have clarifed this question. We have compared the relative performance of RMI, JMS and Java Sockets for the Java 7 verion. We have measured the performance on a Linux Computer. \\
+Performance has an important influence on the usability of distributed applications. Therefore it is useful to know, how well do these distributed models perform. In this project we have clarified this question. We have compared the relative performance of RMI, JMS and Java Sockets for the Java 7 version. We have measured the performance on a Linux Computer. \\
 
 RMI is easy to implement large scale distributed systems but if the system requires a lot of exchanging messages, then it is not recommended. TCP, on the other hand, is good if we deal with a lot of exchanging messages. \\
 
@@ -216,10 +246,10 @@ RMI is easy to implement large scale distributed systems but if the system requi
 The experiment reveals that RMI takes much longer than TCP and UDP. This is because the stub, skeleton and RMI Registry service. In order to call methods on the server, RMI requires to follow the following steps.
 \begin{enumerate}
 \item Client Calls a local procedure
-\item These netork messages are sent to the remote system by the client.
+\item These network messages are sent to the remote system by the client.
 \item The network messages are transferring to the remote system.
 \item The Server Stub is waiting on the remote system for the clients request. It converts the recived message from the standard formant to the internal formant to the remote system.
-\item The server stub exectures a local procedure call to invoke the actual server function
+\item The server stub executes a local procedure call to invoke the actual server function
 \item When the server procedure is finished, it returns to server stub with return value
 \item The server stub converts the return values to the network standard format, puts them into one or more network messages, and call kernal to send back to the client stub.
 \item The message are transferred back across the network to the client stub
@@ -241,7 +271,7 @@ Does the location (Local Network/Different Network) of the client/server pair af
 \subsection{Future Extensions}
 Future projects should compare the relative performance of using these methods of IPC on different operating systems and validate a wheather the operating system affects the performance of these distributed methods. 
 
-Another comparision should be made between different transport protocols such as UDP and TCP to see which performs better in different circumstances.
+Another comparison should be made between different transport protocols such as UDP and TCP to see which performs better in different circumstances.
 
 
 %----------------------------------------------------------------------------------------
