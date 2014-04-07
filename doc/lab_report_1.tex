@@ -22,6 +22,9 @@
 \documentclass{article}
 \newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\# #1}\\}
 \usepackage{graphicx} % Required for the inclusion of images
+\usepackage{float}
+\usepackage{todonotes}
+\restylefloat{table}
 \graphicspath{ {images/} }
 \usepackage{natbib} % Required to change bibliography style to APA
 \usepackage{amsmath} % Required for some math elements 
@@ -35,7 +38,7 @@
 %	DOCUMENT INFORMATION
 %----------------------------------------------------------------------------------------
 
-\title{Project 1: Performance Analysis of IPC Paradigms \\ NWEN 401} % Title
+\title{Project 1: Performance Analysis of IPC Paradigms } % Title
 
 \author{Sriram Venkatesh \\ Victoria University of Wellington} % Author name
 
@@ -46,12 +49,6 @@
 \maketitle % Insert the title, author and date
 
 
-
-% If you wish to include an abstract, uncomment the lines below
-% \begin{abstract}
-% Abstract text
-% \end{abstract}
-
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
@@ -59,30 +56,52 @@
 \section{Introduction}
 The goal of the project was to evaluate the performance of the following three inter-process communication mechanisms:
 
-% If you have more than one objective, uncomment the below:
 \begin{enumerate}
-	\item Java Sockets
-	\item Java Remote Method Invocation (Java RMI)
-	\item Java Message Service using JBoss Package
+\item Java Sockets via TCP
+\item Java Remote Method Invocation (Java RMI)
+\item Java Message Service using JBoss Package
 \end{enumerate}
 
 \subsection{Description}
+\textbf{Java Sockets via TCP} \\ 
+#TODO
+
+
+
+
+\textbf{Java RMI} \\
+Java Remote Method Invocation (Java RMI) is an example of Remote Procedure Call (RPC) enabling client program to locate the server object and remotely invoke the methods from server's stub and skeleton function. \\
+
+To order to communicate, Java RMI requires to do the following steps:
+\begin{enumerate}
+\item Client Calls a local procedure
+\item These network messages are sent to the remote system by the client.
+\item The network messages are transferring to the remote system.
+\item The Server Stub is waiting on the remote system for the clients request. It converts the received message from the standard formant to the internal formant to the remote system.
+\item The server stub executes a local procedure call to invoke the actual server function
+\item When the server procedure is finished, it returns to server stub with return value
+\item The server stub converts the return values to the network standard format, puts them into one or more network messages, and call kernal to send back to the client stub.
+\item The message are transferred back across the network to the client stub
+\item The client stub reads the network messages from the local kernal
+\item After converting the return value to its local format, the client stub finally returns to the client function.
+\end{enumerate}
 
 
 \subsection{Aim}
-Although these mechanisms are principally different protocols, there are always certain situations where remote applications can be implemented using either of these protocols. In such situations, programmers need to choose one of them based on some reliable and concrete results of performance comparision of these two protocols. \\
+Although these mechanisms are principally different protocols, there are always certain situations where remote applications can be implemented using either of these protocols. In such situations, programmers need to choose one of them based on some reliable and concrete results of performance comparison of these protocols. After the completion of this project, we can analyze the comparative performance between these different protocols, and find out the best protocol to use in each use case  \\
 
 
 \subsection{Problems to be Solved}
 After the completion of the experiment, the following questions will be answered:
 \begin{itemize}
-	\item What is the relative performance of each IPC method?
-	\item How does the features of each method explain the difference in performance?	
-	\item How does the size of the message being sent affect the performance of the protocol?
+\item What is the relative performance of each IPC method?
+\item How does the features of each method explain the difference in performance?	
+\item How does the size of the message being sent affect the performance of the protocol?
+\item When is one protocol more application in one scenario compared to another?
 \end{itemize}
 
 \subsection{Performance Comparison}
-In this project report, I have conducted the perofmrance comparison of Java Socket Via TCP, Java RMI and JMS based on three main factors:
+In this project report, I have conducted the performance comparison of Java Socket Via TCP, Java RMI and JMS based on three main factors:
 \begin{itemize}
 \item Latency
 \item Throughput
@@ -91,23 +110,20 @@ In this project report, I have conducted the perofmrance comparison of Java Sock
 \subsection{Experiment Scenarios}
 Each IPC was tested under the following conditions:
 \begin{itemize}
-	\item Each client will send 50 requests to the server.
-	\item The client and server were run the same local network, and the client and server were run
-	on different network.
-	\item Tests were all run using a Unix Machine running similar specs. 
-	\item For testing under different networks, a SSH Tunnel was created between the remote and local machine.
+\item Each client will send 1000 requests to the server.
+\item The client and server were run the same local network
+on different network.
+\item Tests were all run using a Unix Machine running similar specs. 
+\item Varying message types were sent, (i.e Object/Integer)
+\item In the each of the test cases, the network is fast and has a high bandwidth.
 \end{itemize}
 
 \subsection{Performance Criteria}
-For the purposes of this project we have measured the round trip times (RTT) and throughput of each application. The RTT is the total time a method invocation takes. It is important to not that the methods used for perfomrance evaluation do not do any processing and therefore the RTT expresses the overheard of the method invocation. Throughput was calculated by dividing total received packet size by duration \\
+For the purposes of this project we have measured the latency (s) and throughput of each application. The latency is the total time a method invocation takes. It is important to not that the methods used for performance evaluation do not do any processing and therefore the latency expresses the overheard of the method invocation. \\
 
-In the each of the test cases, the network is fast and has a high bandwidth.
-
-
+Throughput was calculated by dividing total received packet size by duration. \\
 
 
-
- 
 %----------------------------------------------------------------------------------------
 %	SECTION 2
 %----------------------------------------------------------------------------------------
@@ -115,31 +131,34 @@ In the each of the test cases, the network is fast and has a high bandwidth.
 \section{Apparatus}
 
 \subsection{Software Used}
+\begin{description}
+\item{Wireshark} was used to inspect and compare the relative packet size and to measure the overall throughput of the application. By dividing the total received packet size by the duration. 
+\end{description}
 
 \subsection{Experimental Environment}
-\begin{table}
-    \begin{tabular}{|c|c|}
-    \hline
-    Parameter        & Value                                    \\ \hline
-    Operating System & elementary OS Luna     					\\ \hline
-    Java Version     & OpenJDK v1.7.0\_51                       \\ \hline
-    CPU              & Intel(R) Core(TM) i7-2620M CPU @ 2.70GHz \\ \hline
-    RAM              & 8GB                                      \\ \hline
-    \end{tabular}
-    \caption {Client Computer Specifications}
+\begin{table}[h]
+\begin{tabular}{|c|c|}
+\hline
+Parameter        & Value                                    \\ \hline
+Operating System & elementary OS Luna     					\\ \hline
+Java Version     & OpenJDK v1.7.0\_51                       \\ \hline
+CPU              & Intel(R) Core(TM) i7-2620M CPU @ 2.70GHz \\ \hline
+RAM              & 8GB                                      \\ \hline
+\end{tabular}
+\caption {Client Computer Specifications}
 \end{table}
 
 
-\begin{table}
-    \begin{tabular}{|c|c|}
-    \hline
-    Parameter        & Value                                    \\ \hline
-    Operating System & Ubuntu 12.04.3 LTS    					\\ \hline
-    Java Version     & OpenJDK v1.7.0\_51                       \\ \hline
-    CPU              & Intel(R) Pentium(R) 4 CPU 2.80GHz 		\\ \hline
-    RAM              & 1GB                                      \\ \hline
-    \end{tabular}
-    \caption {Server Computer Specifications}
+\begin{table}[h]
+\begin{tabular}{|c|c|}
+\hline
+Parameter        & Value                                    \\ \hline
+Operating System & Ubuntu 12.04.3 LTS    					\\ \hline
+Java Version     & OpenJDK v1.7.0\_51                       \\ \hline
+CPU              & Intel(R) Pentium(R) 4 CPU 2.80GHz 		\\ \hline
+RAM              & 1GB                                      \\ \hline
+\end{tabular}
+\caption {Server Computer Specifications}
 \end{table}
 
 %----------------------------------------------------------------------------------------
@@ -149,19 +168,21 @@ In the each of the test cases, the network is fast and has a high bandwidth.
 \section{Procedures}
 
 \subsection{Methodology}
-Developed a simple client server application in Java. The Client sends 100000 messages with the varying sizes. 
+Developed a simple client server application in Java. The Client sends 10000 messages with the varying sizes. 
 
 The sizes of the message are displayed below: 
 \begin{itemize}
-	\item 10 kilobytes
-	\item 15 kilobytes
-	\item 20 kilobytes
-	\item 25 kilobytes
-	\item 30 kilobytes
-	\item 35 kilobytes
+\item 10 kilobytes
+\item 15 kilobytes
+\item 20 kilobytes
+\item 25 kilobytes
+\item 30 kilobytes
 \end{itemize}
 
-To make sure my tests were reliable we ran each test 5 times and gathered statitcs based on the results.
+After creating a program with varying sizes. Another application was made to send objects around the network, to test the performance 
+comparison between the different IPC protocols. 
+
+To make sure my tests were reliable we ran each test 5 times and gathered statistics based on the results.
 
 
 
@@ -170,7 +191,6 @@ To make sure my tests were reliable we ran each test 5 times and gathered statit
 %----------------------------------------------------------------------------------------
 
 \section{Performance Results}
-
 
 
 
@@ -188,9 +208,27 @@ To make sure my tests were reliable we ran each test 5 times and gathered statit
 
 \section{Conclusions and recommendations}
 
-Performance has an important influence on the usability of distributed applications. Therefore it is useful to know, how well do these distributed models perform. In this project we have clarifed this question. We have compared the relative performance of RMI, JMS and Java Sockets for the Java 7 verion. We have measured the performance on a Linux Computer.
+Performance has an important influence on the usability of distributed applications. Therefore it is useful to know, how well do these distributed models perform. In this project we have clarifed this question. We have compared the relative performance of RMI, JMS and Java Sockets for the Java 7 verion. We have measured the performance on a Linux Computer. \\
 
-What is the relative performance of each IPC method?\\
+RMI is easy to implement large scale distributed systems but if the system requires a lot of exchanging messages, then it is not recommended. TCP, on the other hand, is good if we deal with a lot of exchanging messages. \\
+
+\subsection{What is the relative performance of each IPC method?} 
+The experiment reveals that RMI takes much longer than TCP and UDP. This is because the stub, skeleton and RMI Registry service. In order to call methods on the server, RMI requires to follow the following steps.
+\begin{enumerate}
+\item Client Calls a local procedure
+\item These netork messages are sent to the remote system by the client.
+\item The network messages are transferring to the remote system.
+\item The Server Stub is waiting on the remote system for the clients request. It converts the recived message from the standard formant to the internal formant to the remote system.
+\item The server stub exectures a local procedure call to invoke the actual server function
+\item When the server procedure is finished, it returns to server stub with return value
+\item The server stub converts the return values to the network standard format, puts them into one or more network messages, and call kernal to send back to the client stub.
+\item The message are transferred back across the network to the client stub
+\item The client stub reads the network messages from the local kernal
+\item After converting the return value to its local format, the client stub finally returns to the client function.
+\end{enumerate}
+
+
+he result reveals that RMI takes much longer than TCP and UDP. It is probably because of the stub, skeleton and RMI registry service. In order to call remote methods on the server, RMI requires almost 10 steps as shown in Remote Procedure Call and Java RMI Overview article.
 
 
 How does the features of each method explain the difference in performance? \\
